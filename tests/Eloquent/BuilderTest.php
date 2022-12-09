@@ -41,7 +41,8 @@ class BuilderTest extends BaseTestCase
             ->andReturn([]);
 
         $this->builder = new Builder($this->queryBuilder);
-        $this->builder->setModel(new class extends Model {
+        $this->builder->setModel(new class extends Model
+        {
             use PostgisTrait;
             protected $postgisFields = [
                 'point' => Point::class,
@@ -55,8 +56,8 @@ class BuilderTest extends BaseTestCase
     {
         $this->queryBuilder
             ->shouldReceive('raw')
-            ->with("public.ST_GeogFromText('POINT(2 1)')")
-            ->andReturn(new Expression("public.ST_GeogFromText('POINT(2 1)')"));
+            ->with("ST_GeogFromText('POINT(2 1)')")
+            ->andReturn(new Expression("ST_GeogFromText('POINT(2 1)')"));
 
         $this->queryBuilder
             ->shouldReceive('update')
@@ -75,8 +76,8 @@ class BuilderTest extends BaseTestCase
     {
         $this->queryBuilder
             ->shouldReceive('raw')
-            ->with("public.ST_GeogFromText('LINESTRING(0 0, 1 1, 2 2)')")
-            ->andReturn(new Expression("public.ST_GeogFromText('LINESTRING(0 0, 1 1, 2 2)')"));
+            ->with("ST_GeogFromText('LINESTRING(0 0, 1 1, 2 2)')")
+            ->andReturn(new Expression("ST_GeogFromText('LINESTRING(0 0, 1 1, 2 2)')"));
 
         $this->queryBuilder
             ->shouldReceive('update')
@@ -100,8 +101,8 @@ class BuilderTest extends BaseTestCase
     {
         $this->queryBuilder
             ->shouldReceive('raw')
-            ->with("public.ST_GeogFromText('POINT Z(2 1 0)')")
-            ->andReturn(new Expression("public.ST_GeogFromText('POINT Z(2 1 0)')"));
+            ->with("ST_GeogFromText('POINT Z(2 1 0)')")
+            ->andReturn(new Expression("ST_GeogFromText('POINT Z(2 1 0)')"));
 
         $this->queryBuilder
             ->shouldReceive('update')
@@ -120,8 +121,8 @@ class BuilderTest extends BaseTestCase
     {
         $this->queryBuilder
             ->shouldReceive('raw')
-            ->with("public.ST_GeogFromText('LINESTRING Z(0 0 0, 1 1 1, 2 2 2)')")
-            ->andReturn(new Expression("public.ST_GeogFromText('LINESTRING Z(0 0 0, 1 1 1, 2 2 2)')"));
+            ->with("ST_GeogFromText('LINESTRING Z(0 0 0, 1 1 1, 2 2 2)')")
+            ->andReturn(new Expression("ST_GeogFromText('LINESTRING Z(0 0 0, 1 1 1, 2 2 2)')"));
 
         $this->queryBuilder
             ->shouldReceive('update')

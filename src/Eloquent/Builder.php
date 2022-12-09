@@ -1,4 +1,6 @@
-<?php namespace MStaack\LaravelPostgis\Eloquent;
+<?php
+
+namespace MStaack\LaravelPostgis\Eloquent;
 
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use MStaack\LaravelPostgis\Geometries\GeometryInterface;
@@ -23,7 +25,6 @@ class Builder extends EloquentBuilder
 
     protected function asWKT(GeometryInterface $geometry)
     {
-        return $this->getQuery()->raw(sprintf("%s.ST_GeogFromText('%s')",
-                function_exists('config') ? config('postgis.schema') : 'public', $geometry->toWKT()));
+        return $this->getQuery()->raw(sprintf("ST_GeogFromText('%s')", $geometry->toWKT()));
     }
 }

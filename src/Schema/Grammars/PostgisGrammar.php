@@ -1,4 +1,6 @@
-<?php namespace MStaack\LaravelPostgis\Schema\Grammars;
+<?php
+
+namespace MStaack\LaravelPostgis\Schema\Grammars;
 
 use Illuminate\Support\Fluent;
 use MStaack\LaravelPostgis\Schema\Blueprint;
@@ -201,15 +203,14 @@ class PostgisGrammar extends PostgresGrammar
         $schema = function_exists('config') ? config('postgis.schema') : 'public';
 
         return sprintf(
-                "SELECT %s.AddGeometryColumn('%s', '%s', %d, '%s.%s', %d, %s)",
-                $schema,
-                $blueprint->getTable(),
-                $command->column,
-                $srid,
-                $schema,
-                strtoupper($command->type),
-                $dimensions,
-                $typmod
+            "SELECT AddGeometryColumn('%s', '%s', %d, '%s.%s', %d, %s)",
+            $blueprint->getTable(),
+            $command->column,
+            $srid,
+            $schema,
+            strtoupper($command->type),
+            $dimensions,
+            $typmod
         );
     }
 
@@ -239,10 +240,9 @@ class PostgisGrammar extends PostgresGrammar
             if ($type == 'GEOGRAPHY' && $column->srid != 4326) {
                 throw new UnsupportedGeomtypeException('Error with validation of srid! SRID of GEOGRAPHY must be 4326)');
             }
-            return $schema . '.' . $type . '(' . $geometryType . ', ' . $column->srid . ')';
+            return $type . '(' . $geometryType . ', ' . $column->srid . ')';
         } else {
             throw new UnsupportedGeomtypeException('Error with validation of geom type or srid!');
         }
     }
-
 }
